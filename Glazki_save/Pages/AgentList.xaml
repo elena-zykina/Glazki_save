@@ -1,0 +1,185 @@
+﻿<Page x:Class="Glazki_save.Pages.AgentList"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Glazki_save.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="700" d:DesignWidth="900"
+      Title="Список агентов">
+
+    <Page.Resources>
+        <BitmapImage x:Key="Null" UriSource="../Resources/picture.png"/>
+    </Page.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="330"/>
+                <ColumnDefinition Width="250"/>
+            </Grid.ColumnDefinitions>
+            <TextBox HorizontalAlignment="Stretch" 
+                         Style="{StaticResource mainTxt}"
+                         Text="Введите для поиска"
+                         x:Name="SearchAgentBox" TextChanged="SearchAgentBox_TextChanged"
+                         LostFocus="SearchAgentBox_LostFocus" GotFocus="SearchAgentBox_GotFocus" Margin="10,10,20,10" Width="Auto"/>
+            <WrapPanel Grid.Column="1" HorizontalAlignment="Left" 
+                       VerticalAlignment="Center">
+                <ComboBox Style="{StaticResource mainCombo}" x:Name="SortCBox" SelectionChanged="SortCBox_SelectionChanged"
+                          Width="200" Margin="5 0 0 0">
+                    <ComboBoxItem>
+                        <TextBlock Text="Нет"
+                                       Style="{StaticResource mainTxtb}"
+                                       Width="150"/>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <TextBlock Text="Наименование"
+                                       Style="{StaticResource mainTxtb}"
+                                       Width="150"/>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <TextBlock Text="Размер скидки"
+                                       Style="{StaticResource mainTxtb}"
+                                       Width="150"/>
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        <TextBlock Text="Приоритет агента"
+                                       Style="{StaticResource mainTxtb}"
+                                       Width="150"/>
+                    </ComboBoxItem>
+                </ComboBox>
+                <CheckBox x:Name="CheckSort"
+                    HorizontalAlignment="Left"
+                          VerticalAlignment="Center"
+                          Checked="CheckSort_Checked" Unchecked="CheckSort_Unchecked"
+                          Content="Убывание"
+                          Width="auto"
+                          Style="{StaticResource mainCheck}"/>
+            </WrapPanel>
+            <ComboBox Grid.Column="2" HorizontalAlignment="Center"
+                      x:Name="AgentTypeBox" Style="{StaticResource mainCombo}"
+                      Width="230" DisplayMemberPath="Title" SelectionChanged="AgentTypeBox_SelectionChanged"/>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25*"/>
+            </Grid.RowDefinitions>
+            <ScrollViewer>
+                <WrapPanel Orientation="Vertical">
+                    <ListView HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              Margin="90 0 0 80"
+                              x:Name="ListAgent"
+                              Background="Transparent" Width="700"
+                              BorderBrush="Transparent"
+                              SelectionChanged="ListAgent_SelectionChanged">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListBoxItem">
+                                            <Border BorderBrush="Black"
+                                                        Background="Transparent"
+                                                        Width="670"
+                                                        Height="140"
+                                                        x:Name="BorderTest" BorderThickness="1"
+                                                        Margin="0 10 0 0">
+                                                <WrapPanel Orientation="Vertical">
+                                                    <WrapPanel Orientation="Horizontal"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center">
+                                                        <Border BorderBrush="Black"
+                                                                Background="Transparent">
+                                                            <WrapPanel Orientation="Vertical"
+                                                           Width="150">
+                                                                <Image Margin="10 15 10 15"
+                                                                       Grid.Row="0" 
+                                                                       Source="{Binding Logo, FallbackValue={StaticResource Null}}" 
+                                                                       Width="130"/>
+                                                            </WrapPanel>
+                                                        </Border>
+                                                        <Border BorderBrush="Black">
+                                                            <WrapPanel Orientation="Vertical"
+                                                           Width="350">
+                                                                <WrapPanel Orientation="Horizontal">
+                                                                    <TextBlock Text="{Binding AgentType.Title}"
+                                                                               Margin="10 10 0 0"
+                                                                               x:Name="TxtAgentType"
+                                                                               Style="{StaticResource agentTxtb}"
+                                                                               FontSize="18"/>
+                                                                    <TextBlock Text="|"
+                                                                               Style="{StaticResource agentTxtb}"
+                                                                               Margin="10 10 10 0"
+                                                                               FontSize="18"/>
+                                                                    <TextBlock Text="{Binding Title}"
+                                                                               Margin="0 10 0 0"
+                                                                               x:Name="TxtAgentTitle"
+                                                                               Style="{StaticResource agentTxtb}"
+                                                                               FontSize="18"/>
+                                                                </WrapPanel>
+                                                                <WrapPanel Orientation="Horizontal">
+                                                                    <TextBlock Text="продаж за год"
+                                                                   Margin="10 5 10 0"
+                                                                   x:Name="TxtSales"
+                                                                   Style="{StaticResource agentTxtb}"/>
+                                                                </WrapPanel>
+                                                                <WrapPanel Orientation="Horizontal">
+                                                                    <TextBlock Text="{Binding Phone}"
+                                                                   Margin="10 5 10 0"
+                                                                   x:Name="TxtAgentPhone"
+                                                                   Style="{StaticResource agentTxtb}"/>
+                                                                </WrapPanel>
+                                                                <WrapPanel Orientation="Horizontal">
+                                                                    <TextBlock x:Name="Priority"
+                                                                               Text="Приоритетность: "
+                                                                               Margin="10 5 0 0"
+                                                                               Style="{StaticResource agentTxtb}"/>
+                                                                    <TextBlock Text="{Binding Priority}"
+                                                                               Style="{StaticResource agentTxtb}"
+                                                                               Margin="0 5 0 0"/>
+                                                                </WrapPanel>
+                                                            </WrapPanel>
+                                                        </Border>
+                                                    </WrapPanel>
+                                                    <WrapPanel Orientation="Horizontal"
+                                                       HorizontalAlignment="Right"
+                                                       VerticalAlignment="Top">
+                                                        <TextBlock Visibility="Hidden"
+                                                    x:Name="ProductCost"
+                                                           Text="рублей"
+                                                           Style="{StaticResource mainTxtb}"/>
+                                                    </WrapPanel>
+                                                </WrapPanel>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="BorderTest" Property="Background" Value="#FFE9F9"/>
+                                                    <Setter TargetName="BorderTest" Property="Cursor" Value="Hand"/>
+                                                </Trigger>
+                                                <Trigger Property="IsSelected" Value="True">
+                                                    <Setter TargetName="BorderTest" Property="Background" Value="#B175EE"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                    </ListView>
+                </WrapPanel>
+            </ScrollViewer>
+        </Grid>
+        <WrapPanel Grid.Row="2">
+            <Button x:Name="btnAdd"
+                    Click="btnAdd_Click"
+                    Style="{StaticResource mainBtn}"
+                    Content="Добавить"/>
+        </WrapPanel>
+    </Grid>
+</Page>
