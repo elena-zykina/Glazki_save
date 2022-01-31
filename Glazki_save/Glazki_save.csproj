@@ -131,12 +131,19 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\AddAgent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\AgentList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Pages\AddAgent.xaml.cs">
+      <DependentUpon>AddAgent.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\AgentList.xaml.cs">
       <DependentUpon>AgentList.xaml</DependentUpon>
     </Compile>

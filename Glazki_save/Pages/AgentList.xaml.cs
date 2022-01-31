@@ -94,7 +94,7 @@ namespace Glazki_save.Pages
         }
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-
+            Transition.MainFrame.Navigate(new AddAgent());
         }
 
         private void SortCBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
